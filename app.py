@@ -3,8 +3,8 @@ import pandas as pd
 import openai
 from secrets import openai_api_key
 
-# Load user queries from CSV file
-user_queries = pd.read_csv("D:\project\recruite_app\user_queries.csv")
+# Load user queries from TXT file
+user_queries = pd.read_csv("D:\project\recruite_app\user_queries.txt")
 
 # Define a function to query GPT-4
 def query_gpt4(prompt):
