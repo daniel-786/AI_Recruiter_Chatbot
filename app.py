@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import openai
 
 # Load API key from Streamlit secrets
 openai_api_key = st.secrets["openai_api_key"]
