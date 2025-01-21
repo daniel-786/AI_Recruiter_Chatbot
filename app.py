@@ -12,19 +12,22 @@ except FileNotFoundError:
     user_queries = pd.DataFrame(columns=["query"])
     st.warning("User queries file not found. Starting with an empty query list.")
 
-# Define a function to query GPT-4
-def query_gpt4(prompt):
+# Define a function to query ChatGPT 4.0 Mini
+def query_chatgpt(prompt):
     openai.api_key = openai_api_key
     try:
-        response = openai.Completion.create(
-            engine="gpt-4",
-            prompt=prompt,
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ],
             max_tokens=150
         )
-        return response.choices[0].text.strip()
+        return response.choices[0].message['content'].strip()
     except Exception as e:
-        st.error(f"Error querying GPT-4: {e}")
-        return "An error occurred while querying GPT-4."
+        st.error(f"Error querying ChatGPT 4.0 Mini: {e}")
+        return "An error occurred while querying ChatGPT 4.0 Mini."
 
 # Create a Streamlit interface
 st.title("AI Recruiter Chatbot")
@@ -36,9 +39,9 @@ st.write(user_queries)
 # Get user input
 user_input = st.text_input("Enter your query:")
 
-# Query GPT-4 and display response
+# Query ChatGPT 4.0 Mini and display response
 if st.button("Get Response") and user_input:
-    response = query_gpt4(user_input)
+    response = query_chatgpt(user_input)
     st.write(f"Chatbot Response: {response}")
 else:
     st.warning("Please enter a query.")
