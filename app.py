@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import openai
 
-# Load API key from Streamlit secrets
+# Load API key from Stressamlit secrets
 openai_api_key = st.secrets["openai_api_key"]
 
 # Load user queries from TXT file (error handling added)
@@ -18,13 +18,10 @@ def query_chatgpt(prompt):
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": prompt}
-            ],
-            max_tokens=150
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=100
         )
-        return response.choices[0].message['content'].strip()
+        return response['choices'][0]['message']['content'].strip()
     except Exception as e:
         st.error(f"Error querying ChatGPT 4.0 Mini: {e}")
         return "An error occurred while querying ChatGPT 4.0 Mini."
